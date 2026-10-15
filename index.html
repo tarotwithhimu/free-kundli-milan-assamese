@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>অষ্টকূট মিলন</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f4f8;--surf:#fff;--ink:#101828;--mute:#667085;--line:#e4e7ec;--pri:#0f766e;--pri2:#ccfbf1;--good:#16a34a;--mid:#d97706;--bad:#dc2626;--sh:0 1px 2px rgba(16,24,40,.06),0 4px 16px rgba(16,24,40,.05)}
+@media(prefers-color-scheme:dark){:root{--bg:#0c1117;--surf:#161c24;--ink:#eef2f6;--mute:#98a2b3;--line:#253040;--pri:#2dd4bf;--pri2:#10332f;--good:#4ade80;--mid:#fbbf24;--bad:#f87171;--sh:none}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans Bengali",system-ui,sans-serif;padding:env(safe-area-inset-top,0px) 0 0}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);padding:12px 16px;border-bottom:1px solid var(--line)}
+.top div{max-width:720px;margin:0 auto;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:10px}
+.top i{width:30px;height:30px;border-radius:9px;background:var(--pri);display:grid;place-items:center;color:var(--bg);font-style:normal;font-size:.85rem}
+main{max-width:720px;margin:0 auto;padding:16px 16px calc(110px + env(safe-area-inset-bottom,0px))}
+section{display:none}section.on{display:block}
+h1{font-size:1.6rem;line-height:1.4;margin:4px 0 6px}
+h2{font-size:1.15rem;margin:26px 0 10px}
+p{margin:6px 0}.m{color:var(--mute)}.s{font-size:.9rem}
+.card{background:var(--surf);border-radius:18px;box-shadow:var(--sh);padding:16px;margin:12px 0;border:1px solid var(--line)}
+.btn{display:flex;align-items:center;justify-content:center;background:var(--pri);color:var(--bg);font:600 1rem "Noto Sans Bengali",sans-serif;border:0;border-radius:14px;padding:13px 22px;cursor:pointer;width:100%}
+.hero{text-align:center}
+.donut{width:230px;max-width:70%;margin:6px auto 14px;display:block}
+.donut circle{cursor:pointer;transition:stroke-width .15s}.donut circle:hover{stroke-width:20}
+.scale{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:4px 0 10px;gap:2px}
+.scale span{display:block}
+.zone{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.dot{flex:none;width:12px;height:12px;border-radius:50%;margin-top:9px}
+details{background:var(--surf);border:1px solid var(--line);border-radius:16px;margin:10px 0;box-shadow:var(--sh)}
+summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary b{flex:1;font-weight:600}
+summary:after{content:"›";font-size:1.4rem;color:var(--mute);transition:transform .2s}
+details[open] summary:after{transform:rotate(90deg)}
+.pill{font-size:.8rem;font-weight:600;border-radius:20px;padding:0 10px;background:var(--pri2);color:var(--pri)}
+.det{padding:0 16px 14px}
+.row{display:flex;gap:8px;margin:6px 0;font-size:.95rem}.row b{flex:none;min-width:84px}
+.seg{display:flex;background:var(--line);border-radius:12px;padding:3px;margin:12px 0}
+.seg button{flex:1;border:0;background:none;color:var(--mute);font:600 .95rem "Noto Sans Bengali",sans-serif;padding:8px;border-radius:10px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--surf);color:var(--ink);box-shadow:var(--sh)}
+.res{display:flex;gap:16px;align-items:center}
+.ring{width:112px;flex:none}
+.big{font-size:2.1rem;font-weight:700;line-height:1.3}
+.chip{display:inline-block;font-size:.8rem;font-weight:600;border-radius:20px;padding:0 10px;color:#fff}
+.alert{border-radius:12px;padding:10px 14px;margin:8px 0;background:color-mix(in srgb,var(--bad) 12%,var(--surf));border:1px solid color-mix(in srgb,var(--bad) 35%,transparent);font-size:.92rem}
+.sl{margin:12px 0}.sl .h{display:flex;justify-content:space-between;font-weight:500;font-size:.95rem}
+input[type=range]{width:100%;accent-color:var(--pri);height:28px}
+.ghost{width:100%;border:0;background:none;color:var(--mute);font:600 .95rem "Noto Sans Bengali",sans-serif;padding:10px;cursor:pointer}
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(calc(100% - 24px),520px);background:var(--surf);border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 30px rgba(16,24,40,.18);display:flex;padding:6px;z-index:9}
+.nav a{flex:1;display:flex;flex-direction:column;align-items:center;font-size:.72rem;font-weight:600;color:var(--mute);text-decoration:none;padding:6px 0;border-radius:16px;line-height:1.4}
+.nav a.on{background:var(--pri2);color:var(--pri)}
+.nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.note{font-size:.82rem;color:var(--mute);margin-top:24px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div><i>৩৬</i>অষ্টকূট মিলন</div></header>
+<main>
+
+<section id="home">
+<div class="card hero">
+<h1>৩৬ গুণৰ মিলন</h1>
+<p class="m">আঠটা কূটৰ নম্বৰ মিলি হয় ৩৬। যিকোনো ভাগত টিপি শিকক।</p>
+<svg class="donut" id="donut" viewBox="0 0 200 200" role="img" aria-label="৮টা কূটৰ নম্বৰৰ বিভাজন"></svg>
+<button class="btn" data-go="calc">মোৰ নম্বৰ চাওক</button>
+</div>
+<h2>মুঠ নম্বৰৰ অৰ্থ</h2>
+<div class="card"><div class="scale" id="scale"></div><div id="bands"></div>
+<p class="m s">সীমাৰেখা গ্ৰন্থভেদে অলপ ভিন্ন হ'ব পাৰে। ১৮ হৈছে পৰম্পৰাগত ন্যূনতম মান।</p></div>
+<div class="card"><b>বৈদিক জ্যোতিষত অষ্টকূট কি?</b><p class="m">বৰ-কইনাৰ জন্ম-নক্ষত্ৰ আৰু ৰাশিৰ ভিত্তিত মানসিক, শাৰীৰিক আৰু কাৰ্মিক দিশৰ সামঞ্জস্য ৮টা ভাগত (কূট) পৰীক্ষা কৰা হয়। সৰ্বোচ্চ নম্বৰ ১+২+৩+৪+৫+৬+৭+৮ = ৩৬।</p></div>
+</section>
+
+<section id="kuta"><h1>আঠটা কূট</h1><p class="m">প্ৰতিটো টিপি বিতংভাৱে চাওক।</p><div id="kutas"></div></section>
+
+<section id="dosha"><h1>তিনিটা প্ৰধান দোষ</h1><p class="m">মুঠ নম্বৰ ভাল হ'লেও এই তিনিটাত ০ পালে বেলেগকৈ পৰীক্ষা কৰা হয়।</p>
+<details open><summary><span class="dot" style="background:var(--bad)"></span><b>নাড়ী দোষ</b><span class="pill">০/৮</span></summary><div class="det">
+<div class="row"><b>অৰ্থ</b><span>একে নাড়ী (আদি, মধ্য বা অন্ত্য)।</span></div>
+<div class="row"><b>বিশ্বাস</b><span>বংশগতি আৰু স্বাস্থ্যৰ অমিল, সন্তান লাভত পলম বা জটিলতা।</span></div>
+<div class="row"><b>খণ্ডন</b><span>ৰাশি একে কিন্তু নক্ষত্ৰ বেলেগ; নক্ষত্ৰ একে কিন্তু ৰাশি বেলেগ; বা নক্ষত্ৰ একে কিন্তু চৰণ বেলেগ।</span></div></div></details>
+<details><summary><span class="dot" style="background:var(--mid)"></span><b>ভকূট দোষ</b><span class="pill">০/৭</span></summary><div class="det">
+<div class="row"><b>অৰ্থ</b><span>ৰাশিৰ দূৰত্ব ২-১২, ৬-৮ বা ৯-৫।</span></div>
+<div class="row"><b>বিশ্বাস</b><span>আৱেগিক দূৰত্ব, আৰ্থিক সমস্যা বা পাৰিবাৰিক অশান্তি।</span></div>
+<div class="row"><b>খণ্ডন</b><span>দুয়োৰে ৰাশিৰ অধিপতি একে বা মিত্ৰ হ'লে (যেনে মেষ–বৃশ্চিকৰ মঙ্গল; বৃষ–তুলাৰ শুক্ৰ)।</span></div></div></details>
+<details><summary><span class="dot" style="background:var(--pri)"></span><b>গণ দোষ</b><span class="pill">০/৬</span></summary><div class="det">
+<div class="row"><b>অৰ্থ</b><span>সাধাৰণতে দেৱ বা মনুষ্য গণৰ লগত ৰাক্ষস গণৰ মিলন।</span></div>
+<div class="row"><b>বিশ্বাস</b><span>স্বভাৱ আৰু মতাদৰ্শৰ প্ৰচণ্ড অমিল।</span></div>
+<div class="row"><b>খণ্ডন</b><span>গ্ৰহ মৈত্ৰী আৰু ভকূট সম্পূৰ্ণ নম্বৰ হ'লে প্ৰভাৱ বহু কমে (প্ৰচলিত মত, সকলো গ্ৰন্থৰ একে নহয়)।</span></div></div></details>
+</section>
+
+<section id="calc"><h1>মোৰ নম্বৰ</h1>
+<p class="m s">নক্ষত্ৰৰ পৰা নম্বৰ এই এপে গণনা নকৰে। জ্যোতিষী বা কুণ্ডলী-মিলন চফ্টৱেৰৰ নম্বৰ ইয়াত দিয়ক।</p>
+<div class="card" id="out"></div>
+<div class="seg" id="seg"><button data-m="t" aria-pressed="true">মুঠ নম্বৰ</button><button data-m="e" aria-pressed="false">কূট অনুসৰি</button></div>
+<div id="mt" class="card"><div class="sl"><div class="h"><span>মুঠ নম্বৰ</span><b id="tv">—</b></div><input type="range" id="tr" min="0" max="36" step="0.5" value="0" aria-label="মুঠ নম্বৰ"></div></div>
+<div id="me" class="card" hidden></div>
+<button class="ghost" id="rst">আকৌ আৰম্ভ কৰক</button>
+</section>
+
+<section id="facts"><h1>তথ্য যাচাই</h1><p class="m">আপুনি দিয়া নথিখন প্ৰচলিত অষ্টকূট পদ্ধতিৰ লগত মিলাই চোৱা হৈছে।</p><div id="fl"></div></section>
+
+<p class="note">সতৰ্কবাণী: অষ্টকূট এটা পৰম্পৰাগত বিশ্বাসভিত্তিক পদ্ধতি; ইয়াৰ সন্তান, স্বাস্থ্য বা সুখ-সম্পৰ্কীয় দাবীৰ বৈজ্ঞানিক প্ৰমাণ নাই। বিবাহৰ সিদ্ধান্ত কেৱল নম্বৰৰ ওপৰত নিৰ্ভৰ নকৰিব। এই এপ শিক্ষাৰ বাবে; চূড়ান্ত পৰামৰ্শৰ বাবে অভিজ্ঞ জ্যোতিষীৰ সৈতে কথা পাতক।</p>
+</main>
+
+<nav class="nav" id="nav"></nav>
+
+<script>
+var $=function(i){return document.getElementById(i)};
+function a(n){return String(n).replace(/\d/g,function(d){return "০১২৩৪৫৬৭৮৯"[d]})}
+var C={bad:"#dc2626",mid:"#d97706",good:"#16a34a"};
+var BANDS=[["০–১৭","অনুকূল নহয় / দুৰ্বল","পৰম্পৰাগতভাৱে এই মিলনৰ পৰামৰ্শ দিয়া নহয়। মতানৈক্য, দৃষ্টিভংগীৰ অমিল বা গুৰুতৰ দোষৰ ইংগিত দিয়ে।",C.bad,18],
+["১৮–২৪","মধ্যমীয়া / গ্ৰহণযোগ্য","পৰম্পৰাগত ন্যূনতম মান ১৮। নাড়ী বা ভকূটৰ গুৰুতৰ দোষ নাথাকিলে আগবাঢ়িব পাৰি।",C.mid,7],
+["২৫–৩১","উত্তম / অতি অনুকূল","মানসিক, শাৰীৰিক আৰু আৱেগিক দিশত সুন্দৰ সমিলমিল; দীৰ্ঘম্যাদী সুখকৰ জীৱনৰ বাবে শুভ।",C.good,7],
+["৩২–৩৬","অতি উৎকৃষ্ট / বিৰল","প্ৰায় প্ৰতিটো দিশতে অপূৰ্ব সমন্বয়। তথাপি বাস্তৱ জীৱনত বুজাপৰা আৰু প্ৰচেষ্টা লাগিবই।",C.good,4]];
+var K=[["বৰ্ণ (Varna)",1,"আধ্যাত্মিক সামঞ্জস্য আৰু অহংবোধৰ সমতা","১","০","দুয়োৰে জীৱনৰ দায়িত্ব আৰু স্থিতিৰ মাজত অহংকাৰৰ সংঘৰ্ষ নোহোৱাকৈ সমিলমিল থাকে নে নাই চায়।"],
+["বশ্য (Vashya)",2,"পাৰস্পৰিক আকৰ্ষণ আৰু প্ৰভাৱৰ ভাৰসাম্য","২","০","কোনে কাক সহজে মানি লয় বা কাৰ প্ৰভাৱ থাকে; ০ হ'লে পাৰস্পৰিক দমন বা ক্ষমতাৰ সংঘাত হ'ব পাৰে।"],
+["তাৰা (Tara)",3,"স্বাস্থ্য, ভাগ্য আৰু পাৰস্পৰিক উন্নতি","৩ (বা ১.৫)","০","নক্ষত্ৰৰ মিল (দিন/তাৰা); ০ হ'লে ভাগ্যোদয়ত বাধা বা স্বাস্থ্যৰ উত্থান-পতন হ'ব পাৰে বুলি বিশ্বাস।"],
+["যোনি (Yoni)",4,"জৈৱিক আৰু শাৰীৰিক আন্তৰিকতা","৩–৪","০–১","শাৰীৰিক আকৰ্ষণ আৰু আন্তৰিক সুখ নিৰ্ণয় কৰে।"],
+["গ্ৰহ মৈত্ৰী (Graha Maitri)",5,"মানসিক মিলন আৰু যোগাযোগ","৪–৫","০–১","চন্দ্ৰ ৰাশিৰ অধিপতিৰ বন্ধুত্ব। ৪–৫ মানে বন্ধুসুলভ মনোভাৱ; ০ মানে মানসিক শত্ৰুতা।"],
+["গণ (Gana)",6,"স্বভাৱ আৰু আচৰণগত বৈশিষ্ট্য","৫–৬","০ (গণ দোষ)","দেৱ (শান্ত), মনুষ্য (বাস্তৱবাদী), ৰাক্ষস (প্ৰভাৱশালী)। ০ মানে প্ৰচণ্ড ব্যক্তিত্বৰ সংঘাত।"],
+["ভকূট (Bhakoot)",7,"আৱেগিক বান্ধোন, পৰিয়াল আৰু আৰ্থিক স্থিতি","৭","০ (ভকূট দোষ)","ৰাশিৰ দূৰত্বৰ ওপৰত নিৰ্ভৰশীল (২-১২, ৬-৮, ৯-৫)।"],
+["নাড়ী (Nadi)",8,"বংশগতি, স্নায়ুতন্ত্ৰ আৰু সন্তান সুখ","৮","০ (নাড়ী দোষ)","আটাইতকৈ বেছি নম্বৰৰ কূট। ০ মানে একে নাড়ী (আদি, মধ্য, অন্ত্য)।"]];
+var F=[[1,"৮টা কূট, ৩৬ গুণ; প্ৰতিটোৰ সৰ্বোচ্চ ১ৰ পৰা ৮","সঠিক"],
+[1,"নাড়ী আৰু ভকূটত ০ বা পূৰ্ণ নম্বৰ; তাৰা ০/১.৫/৩; যোনি ০–৪; বৰ্ণ ০ বা ১","সঠিক"],
+[1,"ভকূট দোষ: ২-১২, ৬-৮, ৯-৫ ৰাশি-সম্বন্ধ; একে বা মিত্ৰ অধিপতিত খণ্ডন; মেষ–বৃশ্চিক (মঙ্গল), বৃষ–তুলা (শুক্ৰ) উদাহৰণ","সঠিক"],
+[1,"নাড়ী দোষৰ তিনিটা প্ৰচলিত খণ্ডন (একে ৰাশি/ভিন্ন নক্ষত্ৰ; একে নক্ষত্ৰ/ভিন্ন ৰাশি; একে নক্ষত্ৰ/ভিন্ন চৰণ)","সঠিক, গ্ৰন্থভেদে অলপ ভিন্ন"],
+[2,"১৮ নম্বৰ 'বাধ্যতামূলক' বুলি লিখা আছিল। এইটো পৰম্পৰাগত ন্যূনতম মান, শাস্ত্ৰীয় আইন নহয়; এপত সংশোধন কৰা হ'ল","সংশোধিত"],
+[2,"বশ্য আৰু গণৰ নম্বৰ কিছুমান পদ্ধতিত ভিন্ন (যেনে বশ্যত আধা নম্বৰ, গণত দেৱ–ৰাক্ষসৰ ক্ষেত্ৰত ০ বা ১)","পদ্ধতিভেদে ভিন্ন"],
+[2,"২৫–৩১ আৰু ৩২–৩৬ ভাগ: কিছুমান উৎসত ২৫–৩২ আৰু ৩৩–৩৬ বুলি দিয়া হয়","মতভেদ আছে"],
+[2,"গণ দোষ খণ্ডন (গ্ৰহ মৈত্ৰী + ভকূট পূৰ্ণ নম্বৰ) এটা প্ৰচলিত মত; আটাই গ্ৰন্থত নাই","একমাত্ৰ মত নহয়"],
+[3,"'সৰ্বোচ্চৰ ৬০–১০০% ভাল, ~৫০% মধ্যমীয়া' নিয়ম ধ্ৰুপদী নহয়, নথিখনৰ নিজা সহজ ব্যাখ্যা। এপত নিয়ম হিচাপে ব্যৱহাৰ কৰা হোৱা নাই","শাস্ত্ৰীয় নহয়"],
+[3,"সন্তান, স্বাস্থ্য, আৰ্থিক অৱস্থা বা দাম্পত্য সুখৰ ওপৰত নাড়ী/ভকূট/গণৰ প্ৰভাৱৰ বৈজ্ঞানিক প্ৰমাণ নাই","বিশ্বাস, বিজ্ঞান নহয়"]];
+var FC={1:C.good,2:C.mid,3:C.bad};
+var NAV=[["home","ঘৰ","M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"],["kuta","কূট","M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"],["calc","নম্বৰ","M4 18a9 9 0 1 1 16 0M12 14l4-4"],["dosha","দোষ","M12 3l10 18H2zM12 10v5M12 18h.01"],["facts","যাচাই","M20 6L9 17l-5-5"]];
+$("nav").innerHTML=NAV.map(function(n){return '<a href="#'+n[0]+'" data-p="'+n[0]+'"><svg viewBox="0 0 24 24"><path d="'+n[2]+'"/></svg>'+n[1]+'</a>'}).join("");
+function hue(i){return "hsl("+(172-i*17)+" 62% "+(i%2?40:48)+"%)"}
+var R=80,CI=2*Math.PI*R,st=0,dn="";
+K.forEach(function(k,i){var L=k[1]/36*CI;dn+='<circle data-k="'+i+'" cx="100" cy="100" r="'+R+'" fill="none" stroke="'+hue(i)+'" stroke-width="16" stroke-dasharray="'+(L-3)+' '+(CI-L+3)+'" stroke-dashoffset="'+(-st)+'" transform="rotate(-90 100 100)"><title>'+K[i][0]+' '+a(k[1])+'</title></circle>';st+=L});
+$("donut").innerHTML=dn+'<text x="100" y="104" text-anchor="middle" font-size="44" font-weight="700" fill="currentColor">৩৬</text><text x="100" y="128" text-anchor="middle" font-size="13" fill="var(--mute)">সৰ্বোচ্চ গুণ</text>';
+$("scale").innerHTML=BANDS.map(function(b,i){var w=[18,7,7,4][i];return '<span style="width:'+w/36*100+'%;background:'+b[3]+'"></span>'}).join("");
+$("bands").innerHTML=BANDS.map(function(b){return '<div class="zone"><span class="dot" style="background:'+b[3]+'"></span><div><b>'+b[0]+' · '+b[1]+'</b><p class="m s">'+b[2]+'</p></div></div>'}).join("");
+$("kutas").innerHTML=K.map(function(k,i){return '<details id="k'+i+'"><summary><span class="dot" style="background:'+hue(i)+'"></span><b>'+k[0]+'</b><span class="pill">'+a(k[1])+' নম্বৰ</span></summary><div class="det"><p class="m">'+k[2]+'</p><div class="row"><b style="color:var(--good)">ভাল</b><span>'+k[3]+'</span></div><div class="row"><b style="color:var(--bad)">উদ্বেগজনক</b><span>'+k[4]+'</span></div><p>'+k[5]+'</p></div></details>'}).join("");
+var nc={1:0,2:0,3:0};F.forEach(function(f){nc[f[0]]++});
+$("fl").innerHTML='<div class="card"><b>'+a(nc[1])+' টা সঠিক · '+a(nc[2])+' টা সংশোধন/মতভেদ · '+a(nc[3])+' টা শাস্ত্ৰীয় নহয়</b></div>'+F.map(function(f){return '<div class="card"><span class="chip" style="background:'+FC[f[0]]+'">'+f[2]+'</span><p>'+f[1]+'</p></div>'}).join("");
+function route(){var h=location.hash.slice(1)||"home";if(!$(h))h="home";
+document.querySelectorAll("section").forEach(function(s){s.classList.toggle("on",s.id==h)});
+document.querySelectorAll(".nav a").forEach(function(x){x.classList.toggle("on",x.dataset.p==h)});scrollTo(0,0)}
+addEventListener("hashchange",route);
+document.addEventListener("click",function(e){var g=e.target.closest("[data-go]");if(g)location.hash=g.dataset.go;
+var c=e.target.closest("circle[data-k]");if(c){location.hash="kuta";var d=$("k"+c.dataset.k);d.open=true;setTimeout(function(){d.scrollIntoView({block:"center"})},50)}});
+var mode="t",tv=null,ev=[];
+$("me").innerHTML=K.map(function(k,i){return '<div class="sl"><div class="h"><span>'+k[0]+'</span><b id="ev'+i+'">—</b></div><input type="range" min="0" max="'+k[1]+'" step="0.5" value="0" data-i="'+i+'" aria-label="'+k[0]+'"></div>'}).join("");
+$("seg").onclick=function(e){var b=e.target.closest("button");if(!b)return;mode=b.dataset.m;
+document.querySelectorAll("#seg button").forEach(function(x){x.setAttribute("aria-pressed",x==b)});
+$("mt").hidden=mode!="t";$("me").hidden=mode!="e";calc()};
+function touch(e){var t=e.target;if(!t||t.type!="range")return;if(t.id=="tr")tv=parseFloat(t.value);else ev[t.dataset.i]=parseFloat(t.value);upd()}
+["input","pointerdown","keydown"].forEach(function(n){document.addEventListener(n,function(e){setTimeout(function(){touch(e)},0)})});
+function upd(){$("tv").textContent=tv===null?"—":a(tv);K.forEach(function(k,i){$("ev"+i).textContent=ev[i]===undefined?"—":a(ev[i])+" / "+a(k[1])});calc()}
+$("rst").onclick=function(){tv=null;ev=[];$("tr").value=0;document.querySelectorAll("#me input").forEach(function(x){x.value=0});upd()};
+function ring(p,c){var L=2*Math.PI*50;return '<svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="'+c+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+L*p+' '+L+'" transform="rotate(-90 60 60)" style="transition:stroke-dasharray .4s"/></svg>'}
+function calc(){var tot=null,w=[];
+if(mode=="t")tot=tv;else{var any=false;tot=0;K.forEach(function(k,i){if(ev[i]!==undefined){any=true;tot+=ev[i]}});if(!any)tot=null;
+if(ev[7]===0)w.push("<b>নাড়ী দোষ (০/৮):</b> একে নাড়ী। ৰাশি/নক্ষত্ৰ/চৰণৰ ভিন্নতাৰ খণ্ডন আছে নেকি জ্যোতিষীক সোধক।");
+if(ev[6]===0)w.push("<b>ভকূট দোষ (০/৭):</b> দুয়োৰে ৰাশিৰ অধিপতি একে বা মিত্ৰ হ'লে খণ্ডন হ'ব পাৰে।");
+if(ev[5]===0)w.push("<b>গণ দোষ (০/৬):</b> গ্ৰহ মৈত্ৰী আৰু ভকূট ভাল হ'লে প্ৰভাৱ কমে বুলি প্ৰচলিত মত।")}
+if(tot===null){$("out").innerHTML='<div class="res">'+ring(0,"var(--line)")+'<div><div class="big m">— / ৩৬</div><p class="m">তলৰ স্লাইডাৰ সৰকাওক।</p></div></div>';return}
+var b=tot<18?BANDS[0]:tot<25?BANDS[1]:tot<32?BANDS[2]:BANDS[3];
+var h='<div class="res">'+ring(tot/36,b[3])+'<div><div class="big" style="color:'+b[3]+'">'+a(tot)+' / ৩৬</div><span class="chip" style="background:'+b[3]+'">'+b[1]+'</span></div></div><p>'+b[2]+'</p>';
+h+=w.map(function(t){return '<div class="alert">'+t+'</div>'}).join("");
+if(w.length&&tot>=18)h+='<p class="m s">মুঠ নম্বৰ ১৮ বা তাতকৈ বেছি হ\'লেও ওপৰৰ দোষসমূহ পৰীক্ষা কৰাৰ প্ৰয়োজন।</p>';
+$("out").innerHTML=h}
+upd();route();
+</script>
+</body>
+</html>
