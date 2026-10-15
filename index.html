@@ -46,6 +46,11 @@ details[open] summary:after{transform:rotate(90deg)}
 .alert{border-radius:12px;padding:10px 14px;margin:8px 0;background:color-mix(in srgb,var(--bad) 12%,var(--surf));border:1px solid color-mix(in srgb,var(--bad) 35%,transparent);font-size:.92rem}
 .sl{margin:12px 0}.sl .h{display:flex;justify-content:space-between;font-weight:500;font-size:.95rem}
 input[type=range]{width:100%;accent-color:var(--pri);height:28px}
+.numbox{display:flex;align-items:center;gap:10px;margin:8px 0}
+.numbox input{flex:1;min-width:0;font:600 1.6rem "Noto Sans Bengali",sans-serif;padding:10px 14px;border:2px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink)}
+.numbox input:focus{border-color:var(--pri);outline:0}
+.numbox span{font-size:1.4rem;font-weight:600;color:var(--mute)}
+.err{color:var(--bad);font-size:.9rem;min-height:1.4em}
 .ghost{width:100%;border:0;background:none;color:var(--mute);font:600 .95rem "Noto Sans Bengali",sans-serif;padding:10px;cursor:pointer}
 .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(calc(100% - 24px),520px);background:var(--surf);border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 30px rgba(16,24,40,.18);display:flex;padding:6px;z-index:9}
 .nav a{flex:1;display:flex;flex-direction:column;align-items:center;font-size:.72rem;font-weight:600;color:var(--mute);text-decoration:none;padding:6px 0;border-radius:16px;line-height:1.4}
@@ -94,7 +99,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 <p class="m s">নক্ষত্ৰৰ পৰা নম্বৰ এই এপে গণনা নকৰে। জ্যোতিষী বা কুণ্ডলী-মিলন চফ্টৱেৰৰ নম্বৰ ইয়াত দিয়ক।</p>
 <div class="card" id="out"></div>
 <div class="seg" id="seg"><button data-m="t" aria-pressed="true">মুঠ নম্বৰ</button><button data-m="e" aria-pressed="false">কূট অনুসৰি</button></div>
-<div id="mt" class="card"><div class="sl"><div class="h"><span>মুঠ নম্বৰ</span><b id="tv">—</b></div><input type="range" id="tr" min="0" max="36" step="0.5" value="0" aria-label="মুঠ নম্বৰ"></div></div>
+<div id="mt" class="card"><label for="tn"><b>আপুনি পোৱা নম্বৰ লিখক (০–৩৬)</b></label>
+<div class="numbox"><input type="text" id="tn" inputmode="decimal" autocomplete="off" placeholder="উদাহৰণ: ২৪ বা 24.5"><span>/ ৩৬</span></div>
+<div id="te" class="err" role="alert"></div>
+<div class="sl"><div class="h"><span class="m s">বা স্লাইডাৰ সৰকাওক</span><b id="tv">—</b></div><input type="range" id="tr" min="0" max="36" step="0.5" value="0" aria-label="মুঠ নম্বৰ"></div></div>
 <div id="me" class="card" hidden></div>
 <button class="ghost" id="rst">আকৌ আৰম্ভ কৰক</button>
 </section>
@@ -155,10 +163,17 @@ $("me").innerHTML=K.map(function(k,i){return '<div class="sl"><div class="h"><sp
 $("seg").onclick=function(e){var b=e.target.closest("button");if(!b)return;mode=b.dataset.m;
 document.querySelectorAll("#seg button").forEach(function(x){x.setAttribute("aria-pressed",x==b)});
 $("mt").hidden=mode!="t";$("me").hidden=mode!="e";calc()};
-function touch(e){var t=e.target;if(!t||t.type!="range")return;if(t.id=="tr")tv=parseFloat(t.value);else ev[t.dataset.i]=parseFloat(t.value);upd()}
+function touch(e){var t=e.target;if(!t)return;
+if(t.id=="tn"){var s=t.value.replace(/[০-৯]/g,function(d){return "০১২৩৪৫৬৭৮৯".indexOf(d)}).replace(",",".").trim(),n=Number(s);
+if(s===""){tv=null;$("te").textContent=""}
+else if(isNaN(n)||n<0||n>36){tv=null;$("te").textContent="নম্বৰ ০ ৰ পৰা ৩৬ৰ ভিতৰত হ'ব লাগিব।"}
+else{tv=n;$("tr").value=n;$("te").textContent=""}
+upd();return}
+if(t.type!="range")return;
+if(t.id=="tr"){tv=parseFloat(t.value);$("tn").value=String(tv);$("te").textContent=""}else ev[t.dataset.i]=parseFloat(t.value);upd()}
 ["input","pointerdown","keydown"].forEach(function(n){document.addEventListener(n,function(e){setTimeout(function(){touch(e)},0)})});
 function upd(){$("tv").textContent=tv===null?"—":a(tv);K.forEach(function(k,i){$("ev"+i).textContent=ev[i]===undefined?"—":a(ev[i])+" / "+a(k[1])});calc()}
-$("rst").onclick=function(){tv=null;ev=[];$("tr").value=0;document.querySelectorAll("#me input").forEach(function(x){x.value=0});upd()};
+$("rst").onclick=function(){tv=null;ev=[];$("tr").value=0;$("tn").value="";$("te").textContent="";document.querySelectorAll("#me input").forEach(function(x){x.value=0});upd()};
 function ring(p,c){var L=2*Math.PI*50;return '<svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="'+c+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+L*p+' '+L+'" transform="rotate(-90 60 60)" style="transition:stroke-dasharray .4s"/></svg>'}
 function calc(){var tot=null,w=[];
 if(mode=="t")tot=tv;else{var any=false;tot=0;K.forEach(function(k,i){if(ev[i]!==undefined){any=true;tot+=ev[i]}});if(!any)tot=null;
@@ -167,7 +182,7 @@ if(ev[6]===0)w.push("<b>ভকূট দোষ (০/৭):</b> দুয়োৰ
 if(ev[5]===0)w.push("<b>গণ দোষ (০/৬):</b> গ্ৰহ মৈত্ৰী আৰু ভকূট ভাল হ'লে প্ৰভাৱ কমে বুলি প্ৰচলিত মত।")}
 if(tot===null){$("out").innerHTML='<div class="res">'+ring(0,"var(--line)")+'<div><div class="big m">— / ৩৬</div><p class="m">তলৰ স্লাইডাৰ সৰকাওক।</p></div></div>';return}
 var b=tot<18?BANDS[0]:tot<25?BANDS[1]:tot<32?BANDS[2]:BANDS[3];
-var h='<div class="res">'+ring(tot/36,b[3])+'<div><div class="big" style="color:'+b[3]+'">'+a(tot)+' / ৩৬</div><span class="chip" style="background:'+b[3]+'">'+b[1]+'</span></div></div><p>'+b[2]+'</p>';
+var h='<div class="res">'+ring(tot/36,b[3])+'<div><div class="big" style="color:'+b[3]+'">'+a(tot)+' / ৩৬</div><span class="chip" style="background:'+b[3]+'">'+b[1]+'</span><p class="m" style="margin:6px 0 0">৩৬ৰ ভিতৰত আপুনি পাইছে <b style="color:var(--ink)">'+a(tot)+'</b> ('+a(Math.round(tot/36*100))+'%)</p></div></div><p>'+b[2]+'</p>';
 h+=w.map(function(t){return '<div class="alert">'+t+'</div>'}).join("");
 if(w.length&&tot>=18)h+='<p class="m s">মুঠ নম্বৰ ১৮ বা তাতকৈ বেছি হ\'লেও ওপৰৰ দোষসমূহ পৰীক্ষা কৰাৰ প্ৰয়োজন।</p>';
 $("out").innerHTML=h}
